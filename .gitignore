@@ -4,4 +4,6 @@
 *.iml
 /logs
 /logadaptor
-
+/build
+.gitignore.swp
+.gradle/
