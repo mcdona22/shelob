@@ -6,11 +6,12 @@ class JournalEntrySpec extends Specification{
 
     void "should behave correctly with the map constructor"(){
         setup:
-            Map map = [timestamp : new Date(), serviceName: "name-of-service"]
+            Map map = [timestamp : new Date(), serviceName: "name-of-service", entryType: EntryType.Register]
         when:
             JournalEntry entry = new JournalEntry(map)
         then:
             entry.timestamp == map.timestamp
             entry.serviceName == map.serviceName
+            entry.entryType == map.entryType
     }
 }
