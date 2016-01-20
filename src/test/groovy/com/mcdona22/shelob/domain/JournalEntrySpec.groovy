@@ -1,5 +1,6 @@
 package com.mcdona22.shelob.domain
 import spock.lang.Specification
+import spock.lang.Unroll
 
 import javax.validation.ConstraintViolation
 import javax.validation.Validation
@@ -28,6 +29,8 @@ class JournalEntrySpec extends Specification{
             entry.id == 0   // default value
     }
 
+
+    @Unroll
     void "the object should fail validation correctly"(){
         setup:
             Map map = [timestamp: timestamp, serviceName: serviceName,entryType: entryType]

@@ -1,6 +1,7 @@
 spring:
   datasource:
-    url: jdbc:h2:file:./db/test/shelob-db
+    url: jdbc:h2:mem:test"
+#    url: jdbc:h2:file:./db/test/shelob-db
   h2:
     console:
       enabled: true
