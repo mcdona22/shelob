@@ -2,6 +2,7 @@ package com.mcdona22.shelob.controller
 import com.mcdona22.shelob.Application
 
 import groovy.json.JsonBuilder
+import groovy.json.JsonSlurper
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.SpringApplicationConfiguration
 import org.springframework.test.web.servlet.MockMvc
@@ -32,9 +33,8 @@ class JournalEntryControllerIntegrationSpec extends Specification{
     def "well formed POST should successfully create a journal entry"(){
         setup:
             controller.dao.repository.deleteAll()
-            Map entry = [createdOn: new Date(), serviceName: 'ctl-test-service']
+            Map entry = [ serviceName: 'ctl-test-service']
             String json = new JsonBuilder(entry).toPrettyString()
-            println json
         expect:
             controller.dao.repository.findAll().size() == 0
         when:
@@ -45,8 +45,36 @@ class JournalEntryControllerIntegrationSpec extends Specification{
                             .andExpect(content().contentType("application/json;charset=UTF-8"))
                             .andDo(print())
                             .andReturn()
+            String content = result.response.contentAsString
+            Map responseMap = new JsonSlurper().parseText(content)
         then:
-            result.response.contentAsString
+            responseMap?.entry?.id != 0
+            responseMap?.entry?.serviceName == entry.serviceName
+            ! responseMap?.error
+    }
+
+    def "a badly formed POST should not be persisted"(){
+        setup:
+            controller.dao.repository.deleteAll()
+            Map entry = [ serviceName: ""]
+            String json = new JsonBuilder(entry).toPrettyString()
+        expect:
+            controller.dao.repository.findAll().size() == 0
+        when:
+            MvcResult result = mvc.perform(post(path)
+                .content(json)
+                .header("Content-Type", "application/json"))
+                .andExpect(status().is(500))
+                .andExpect(content().contentType("application/json;charset=UTF-8"))
+                .andDo(print())
+                .andReturn()
+
+            String content = result.response.contentAsString
+            Map responseMap = new JsonSlurper().parseText(content)
+        then:
+            responseMap?.entry?.id == 0
+            responseMap?.entry?.serviceName == entry.serviceName
+            responseMap?.errors?.size() > 0
     }
 
 }

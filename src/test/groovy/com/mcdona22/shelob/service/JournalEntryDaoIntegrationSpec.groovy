@@ -36,11 +36,10 @@ class JournalEntryDaoIntegrationSpec extends Specification {
     }
 
     def "should not write an invalid entity"(){
-
         setup:
             entry.serviceName = ""
         expect:
-        dao.repository.findAll().size() == 0
+            dao.repository.findAll().size() == 0
         when:
             Map map = dao.createJournalEntry(entry)
         then:
