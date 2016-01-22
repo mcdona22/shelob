@@ -1,6 +1,6 @@
 package com.mcdona22.shelob.controller
 import com.mcdona22.shelob.Application
-import com.mcdona22.shelob.domain.EntryType
+
 import groovy.json.JsonBuilder
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.SpringApplicationConfiguration
@@ -32,7 +32,7 @@ class JournalEntryControllerIntegrationSpec extends Specification{
     def "well formed POST should successfully create a journal entry"(){
         setup:
             controller.dao.repository.deleteAll()
-            Map entry = [timestamp: new Date(), serviceName: 'ctl-test-service', entryType: EntryType.Register]
+            Map entry = [createdOn: new Date(), serviceName: 'ctl-test-service']
             String json = new JsonBuilder(entry).toPrettyString()
             println json
         expect:

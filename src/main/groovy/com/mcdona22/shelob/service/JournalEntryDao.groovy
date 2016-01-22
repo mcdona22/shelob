@@ -2,6 +2,8 @@ package com.mcdona22.shelob.service
 
 import com.mcdona22.shelob.domain.JournalEntry
 import com.mcdona22.shelob.domain.JournalEntryRepository
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 
@@ -12,6 +14,8 @@ import javax.annotation.Resource
 
 @Service
 class JournalEntryDao {
+    final static Logger LOG = LoggerFactory.getLogger(JournalEntryDao)
+
     @Autowired JournalEntryRepository repository
     @Resource Validator validator
 
@@ -22,7 +26,7 @@ class JournalEntryDao {
         errors = validator.validate(entry)
 
         if( errors.size()){
-            println "$entry is not valid"
+            LOG.warn "$entry is not valid : $errors"
             map.errors = errors
         } else {
             repository.save(entry)

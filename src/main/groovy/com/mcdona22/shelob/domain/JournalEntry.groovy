@@ -13,17 +13,15 @@ class JournalEntry {
     @GeneratedValue(strategy=GenerationType.AUTO)
     long id
 
-    @NotNull(message = "the timestamp is mandatory")
-    Date timestamp
+    @NotNull(message = "the createdOn is mandatory")
+    Date createdOn = new Date()
 
     @NotNull(message = "the service name is mandatory")
     @Pattern(regexp = '^\\w.*', message = "you may not use the empty string")
     String serviceName
 
-    @NotNull(message = "the entry type is mandatory")
-    EntryType entryType
 
 
-    public String toString(){ "{id: $id, timestamp: $timestamp, serviceName: '$serviceName', entryType: $entryType}"}
+    public String toString(){ "Journal Entry - {id: $id, createdOn: $createdOn, serviceName: '$serviceName'}"}
 }
 

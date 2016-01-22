@@ -1,6 +1,5 @@
 package com.mcdona22.shelob.service
 import com.mcdona22.shelob.Application
-import com.mcdona22.shelob.domain.EntryType
 import com.mcdona22.shelob.domain.JournalEntry
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.SpringApplicationConfiguration
@@ -14,7 +13,7 @@ class JournalEntryDaoIntegrationSpec extends Specification {
 
     def setup(){
         dao.repository.deleteAll()
-        entry = new JournalEntry(timestamp: new Date(), serviceName: 'test-service', entryType: EntryType.Register)
+        entry = new JournalEntry( serviceName: 'test-service')
     }
 
     def "spring wiring should be correct"(){
