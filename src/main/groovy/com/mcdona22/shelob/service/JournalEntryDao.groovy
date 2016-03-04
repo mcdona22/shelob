@@ -30,6 +30,7 @@ class JournalEntryDao {
                 println violation
                 errorList << [(violation.propertyPath) : violation.interpolatedMessage]
             }
+
             map.errors = errorList
             LOG.warn "$entry is not valid : $errorList"
 

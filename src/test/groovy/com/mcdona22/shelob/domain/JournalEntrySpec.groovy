@@ -16,6 +16,7 @@ class JournalEntrySpec extends Specification{
         validator = factory.validator
     }
 
+    void "should sing the national anthem on creation"(){}
 
     void "should behave correctly with the map constructor"(){
         setup:
@@ -40,7 +41,7 @@ class JournalEntrySpec extends Specification{
         then:
             println map
             println violations
-            assert violations.size() == 1
+            violations.size() == 1
             assert violations[0]?.propertyPath.toString() == property
             violations[0]?.message
         where:
@@ -49,8 +50,5 @@ class JournalEntrySpec extends Specification{
         "serviceName"   |new Date() | null
         "serviceName"   |new Date() | "  "
         "serviceName"   |new Date() | ""
-
-
-
     }
 }

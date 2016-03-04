@@ -51,6 +51,8 @@ class JournalEntryControllerIntegrationSpec extends Specification{
             responseMap?.entry?.id != 0
             responseMap?.entry?.serviceName == entry.serviceName
             ! responseMap?.error
+            controller.dao.repository.findAll().size() == 1
+
     }
 
     def "a badly formed POST should not be persisted"(){
