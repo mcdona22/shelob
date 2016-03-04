@@ -1,1 +1,4 @@
-jdk: oraclejdk8
+machine:
+  java:
+    version: oraclejdk8
+
