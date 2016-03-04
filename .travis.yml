@@ -5,3 +5,6 @@ jdk:
 
 script: gradle cobertura
 
+before_install:
+ - chmod +x gradlew
+
